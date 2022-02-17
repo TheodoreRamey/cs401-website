@@ -80,9 +80,18 @@ hr {
   text-align: center;
 }
 
-.content p {
+.content .normal_text {
   font-size: 16px;
   text-indent: 20px;
+}
+
+#user_info ul{
+  font-size: 18px;
+  list-style-type: none;
+}
+
+#user_info ul > li{
+  margin: 8px 0px;
 }
 
 .form_inline {

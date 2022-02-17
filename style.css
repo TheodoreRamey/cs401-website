@@ -76,9 +76,44 @@ hr {
   background-color: #FFFFFF;
 }
 
-.content p {
-  font-size: 16px;
+.content h1, h2, h3 {
+  text-align: center;
 }
 
+.content p {
+  font-size: 16px;
+  text-indent: 20px;
+}
+
+.form_inline {
+  display: flex;
+  flex-flow: column;
+  align-items: left;
+}
+
+.form_inline label {
+  margin: 5px 0px;
+}
+
+.form_inline input{
+  margin: 5px 0px;
+}
+
+.form_inline button {
+  margin: 5px 0px;
+}
+
+.form_inline button:hover {
+  background-color: #888;
+}
+
+#map_infographic {
+  text-align: center;
+}
+
+#map_infographic img {
+  max-width: 100%;
+  height: auto;
+}
 
 

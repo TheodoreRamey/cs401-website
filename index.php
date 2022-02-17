@@ -6,9 +6,7 @@
 <!-- Body of HTML page -->
   <div class="background_card">
     <div class="content">
-      <h1>
-        Video Game Sales and Ratings Visualized: The 1980's to The Present Day
-      </h1>
+      <h1>Video Game Sales and Ratings Visualized: The 1980's to The Present Day</h1>
       <p>
         Like many people my age, video games are a passion of mine. They have come a long way, from simple games like Asteroids to modern hits like Minecraft or Mario Cart. Now more than ever video games have a huge audience, and are able to appeal to people of many varied interests. Looking back at how games have been rated and how well they sold in different regions can tell us a lot about the growth of the industry and its fans. Using regional sales and ratings data we can visualize the history of video games!
       </p>

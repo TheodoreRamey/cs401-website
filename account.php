@@ -4,7 +4,11 @@
 ?>
 
 <!-- Body of HTML page -->
-  <p>ACCOUNT PAGE</p>
+  <div class="background_card">
+    <div class="content">
+      <h2>Account Info</h2>
+    </div>
+  </div>
 
 <?php 
   require_once 'footer.php';

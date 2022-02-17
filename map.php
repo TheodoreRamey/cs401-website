@@ -15,7 +15,7 @@
   
   <div class="background_card">
     <div class="content">
-      <form class="form_inline" action="create_info.php">
+      <form class="data_entry_form" action="create_info.php">
         <label for="game">Game Name:</label>
         <input type="text" id="game" placeholder="Leave blank for all games..." name="game"></input>
         <label for="platform">Game Platform:</label>

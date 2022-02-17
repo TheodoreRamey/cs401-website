@@ -94,25 +94,27 @@ hr {
   margin: 8px 0px;
 }
 
-.form_inline {
+.data_entry_form {
   display: flex;
   flex-flow: column;
   align-items: left;
 }
 
-.form_inline label {
+.data_entry_form label {
+  margin: 5px 0px;
+  font-weight: bold;
+}
+
+.data_entry_form input{
   margin: 5px 0px;
 }
 
-.form_inline input{
-  margin: 5px 0px;
+.data_entry_form button {
+  margin: 8 auto;
+  width: 40%;
 }
 
-.form_inline button {
-  margin: 5px 0px;
-}
-
-.form_inline button:hover {
+.data_entry_form button:hover {
   background-color: #888;
 }
 

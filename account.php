@@ -17,7 +17,8 @@
 <!-- Body of HTML page -->
   <div class="background_card">
     <div class="content">
-      <h2>Account Info</h2>
+      <h2>Welcome <?php echo $accountInfo[1]; ?></h2>
+      <h3>Account Info</h3>
       <div id="user_info">
         <ul>
           <li><strong>User Email: </strong><?php echo $accountInfo[0]; ?></li>
@@ -29,7 +30,7 @@
   </div>
   <div class="background_card">
     <div class="content">
-      <h2>Saved Queries</h2>
+      <h3>Saved Queries</h3>
     </div>
   </div>
 

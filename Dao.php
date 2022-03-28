@@ -13,7 +13,7 @@
     private $user = "b31db98315920b";
     private $pass = "3ef2a0c7";
     
-    /* Credentials for testing on local machine
+    /*// Credentials for testing on local machine
     private $host = "localhost";
     private $db = "test";
     private $user = "root";

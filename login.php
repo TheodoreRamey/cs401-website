@@ -20,7 +20,6 @@
   function getValidData($lookup) {
     return (isset($_SESSION['post'][$lookup])) ? $_SESSION['post'][$lookup] : "";
   }
-  
 ?>
 
 <!-- Body of HTML page -->

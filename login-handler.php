@@ -33,7 +33,6 @@
   if (isset($_SESSION['loginMessage'])) {
     //redirect the user back to 'login.php' using the header function
     header('Location: login.php');
-    $_SESSION['sentiment'] = 'bad';
     $_SESSION['post'] = $_POST;
     exit();
   }

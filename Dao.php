@@ -60,6 +60,18 @@
       return true;
     }
     
+    //Check if a game name exists in the database
+    public function checkGame($game) {
+      $conn = $this->getConnection();
+      return false;
+    }
+    
+    //Check if a game name exists in the database
+    public function checkPublisher($publisher) {
+      $conn = $this->getConnection();
+      return false;
+    }
+    
     //Checks if a username/password combination is valid
     //Returns true is valid, false if not
     public function checkLogin($username, $password) {

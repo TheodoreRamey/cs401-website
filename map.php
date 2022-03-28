@@ -1,4 +1,5 @@
 <?php 
+  session_start();
   $current = 'mapped_data';
   require_once 'header.php';
 ?>
@@ -15,7 +16,7 @@
   
   <div class="background_card">
     <div class="content">
-      <form class="data_entry_form" action="create_info.php">
+      <form class="data_entry_form" action="create-info.php" method="get">
         <label for="game">Game Name:</label>
         <input type="text" id="game" placeholder="Leave blank for all games..." name="game"></input>
         <label for="platform">Game Platform:</label>

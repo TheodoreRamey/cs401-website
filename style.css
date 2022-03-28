@@ -118,6 +118,13 @@ hr {
   background-color: #888;
 }
 
+.message {
+  background-color: #cb4154;
+  padding: 10px 10px;
+  margin: 10px 0px;
+  color: white;
+}
+
 #map_infographic {
   text-align: center;
 }

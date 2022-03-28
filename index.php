@@ -1,4 +1,5 @@
 <?php 
+  session_start();
   $current = 'index';
   require_once 'header.php';
 ?>

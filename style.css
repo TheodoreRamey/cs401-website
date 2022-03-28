@@ -101,16 +101,16 @@ hr {
 }
 
 .data_entry_form label {
-  margin: 5px 0px;
+  margin: 4px 0px;
   font-weight: bold;
 }
 
 .data_entry_form input{
-  margin: 5px 0px;
+  margin: 4px 0px;
 }
 
 .data_entry_form button {
-  margin: 8 auto;
+  margin: 10 auto;
   width: 40%;
 }
 
@@ -120,8 +120,8 @@ hr {
 
 .message {
   background-color: #cb4154;
-  padding: 10px 10px;
-  margin: 10px 0px;
+  padding: 8px 8px;
+  margin: 8px 0px;
   color: white;
 }
 

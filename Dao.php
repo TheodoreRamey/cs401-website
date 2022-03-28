@@ -7,19 +7,19 @@
     //Create a logger for error messages
     private $logger = null;
     
-    /*//Login credentials for Heroku database
+    //Login credentials for Heroku database
     private $host = "us-cdbr-east-05.cleardb.net";
     private $db = "heroku_9d91e0ec2736e56";
     private $user = "b31db98315920b";
     private $pass = "3ef2a0c7";
-    */
     
-    // Credentials for testing on local machine
+    
+    /*// Credentials for testing on local machine
     private $host = "localhost";
     private $db = "test";
     private $user = "root";
     private $pass = "";
-    
+    */
     
     //Create a log file named 'log.txt' and instantiate our logger
     public function __construct() {

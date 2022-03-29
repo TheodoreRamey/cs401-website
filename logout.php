@@ -7,4 +7,6 @@
   
   //redirect back to the login screen
   header("Location: login.php");
+  session_destroy();
+  exit();
 ?>

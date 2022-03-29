@@ -113,7 +113,7 @@
       //(select/option basically, as text is validated in the handler)
       $game = "%" . $game . "%";
       $publisher = "%" . $publisher . "%";
-      if ($platform == "ANY" || $platform = "") {
+      if ($platform == "ANY" || $platform == "") {
         //Replace ANY with blank, as all platforms will 'contain' the empty string
         $platform = "%" . "" . "%";
       }
@@ -123,7 +123,7 @@
       if (!isset($yearMax) || $yearMax == "") {
         $yearMin = 2016;
       }
-      if ($genre == "ANY" || $genre = "") {
+      if ($genre == "ANY" || $genre == "") {
         $genre = "%" . "" . "%";
       }
       $sales = $this->getSalesFromIndex($sales);
@@ -160,7 +160,7 @@
       //(select/option basically, as text is validated in the handler)
       $game = "%" . $game . "%";
       $publisher = "%" . $publisher . "%";
-      if ($platform == "ANY" || $platform = "") {
+      if ($platform == "ANY" || $platform == "") {
         //Replace ANY with blank, as all platforms will 'contain' the empty string
         $platform = "%" . "" . "%";
       }
@@ -170,7 +170,7 @@
       if (!isset($yearMax) || $yearMax == "") {
         $yearMin = 2016;
       }
-      if ($genre == "ANY" || $genre = "") {
+      if ($genre == "ANY" || $genre == "") {
         $genre = "%" . "" . "%";
       }
       $sales = $this->getSalesFromIndex($sales);

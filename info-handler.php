@@ -39,14 +39,21 @@
     //redirect the user back to 'login.php' using the header function
     header('Location: map.php');
     $_SESSION['post'] = $_POST;
+    $_SESSION['currentQuery'] = False;
     exit();
   }
   
   //If the data is valid, send the user back but with an infographic
   unset($_SESSION['post']);
-  require_once 'Dao.php';
-  $dao = new Dao();
-  $_SESSION['currentQuery'] = $dao->createInfographic($game, $platform, $yearMin, $yearMax, $genre, $publisher, $region, $sales);
+  $_SESSION['currentQuery'] = True;
+  $_SESSION['currentGame'] = $game;
+  $_SESSION['currentPlatform'] = $platform;
+  $_SESSION['currentYearMin'] = $yearMin;
+  $_SESSION['currentYearMax'] = $yearMax;
+  $_SESSION['currentGenre'] = $genre;
+  $_SESSION['currentPublisher'] = $publisher;
+  $_SESSION['currentRegion'] = $region;
+  $_SESSION['currentSales'] = $sales;
   header("Location: map.php");
   unset($_SESSION['infoMessage']);
   exit();

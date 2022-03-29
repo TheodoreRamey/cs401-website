@@ -10,10 +10,15 @@
     unset($_SESSION['infoMessage']);
   }
   
-  //Grab the result set if it exists (this page redirects to itself)
-  if (isset($_SESSION['currentQuery'])) {
-    $resultSet = $_SESSION['currentQuery'];
-    unset($_SESSION['currentQuery']);
+  if ($_SESSION['currentQuery']) {
+    $currentGame = $_SESSION['currentGame'];
+    $currentPlatform = $_SESSION['currentPlatform'];
+    $currentYearMin = $_SESSION['currentYearMin'];
+    $currentYearMax = $_SESSION['currentYearMax'];
+    $currentGenre = $_SESSION['currentGenre'];
+    $currentPublisher = $_SESSION['currentPublisher'];
+    $currentRegion = $_SESSION['currentRegion'];
+    $currentSales = $_SESSION['currentSales'];
   }
   
   //Function to get valid form data to repopulate forms
@@ -37,7 +42,7 @@
     <div class="content">
       <h3>Infographics: How To Use</h3>
       <p>
-        Select search parameters for the infographic. Different parameters include: <strong>Name, Platform, Year of Release, Genre, Publisher, Region, and Sales.</strong>
+        While our selection of games is large, please refrain from being hyper-specific unless you are looking for a specific game or small-subset of games. Saved form data will reset on page refresh. Select search parameters for the infographic. Different parameters include: <strong>Name, Platform, Year of Release, Genre, Publisher, Region, and Minimum Sales.</strong> 
       </p>
       
       <form class="data_entry_form" action="info-handler.php" method="post">
@@ -71,7 +76,7 @@
         <select name="sales" id="sales" selected="<?php echo getValidData('sales'); ?>">
           <?php foreach($salesOptions as $eachSales): ?>
             <option value="<?php echo $eachSales ?>"<?php if(getValidData('sales') == $eachSales) { echo ' selected="selected"'; } ?>><?php echo $salesComments[$eachSales] ?></option>
-          <?php endforeach ?>
+          <?php unset($_SESSION['post']); endforeach ?>
         </select>
         <button type="submit">Submit</button>
       </form>
@@ -88,12 +93,31 @@
   <div class="background_card">
     <div class="content">
       <div id="map_infographic">
-        <h2>Result Set: Games That Match Your Parameters</h2>
-        
+        <?php 
+        if ($_SESSION['currentQuery']) {
+          //Grab the data from the database
+          require_once 'Dao.php';
+          $dao = new Dao();
+          $resultSet = $dao->createInfographic($currentGame, $currentPlatform, $currentYearMin, $currentYearMax, $currentGenre, $currentPublisher, $currentRegion, $currentSales);
+          
+          echo "<h2>Result Set: " . $resultSet->rowCount() . " Games That Match Your Parameters</h2>";
+          echo "<p><strong>Name:</strong> " . $currentGame . ", <strong>Platform: </strong>" . $currentPlatform . ", <strong>Release Year: </strong>" . $currentYearMin . "-" . $currentYearMax . ", <strong>Genre: </strong>" . $currentGenre . ", <strong>Publisher: </strong>" . $currentPublisher . ", <strong>Region: </strong>" . $currentRegion . ", <strong>Sales: </strong>" . $currentSales . "</p>";
+          
+          //Print it all out in a table for the user to see until the infographic works
+          //Potentially keep this but move it to another webpage
+          echo "<table>";
+            echo "<tr><td><strong>Game Name</strong></td><td><strong>Platform</strong></td><td><strong>Release Year</strong></td><td><strong>Genre</strong></td><td><strong>Publisher</strong></td><td><strong>NA Sales</strong></td><td><strong>EU Sales</strong></td><td><strong>JP Sales</strong></td><td><strong>Other Sales</strong></td><td><strong>Global Sales</strong></td></tr>";
+          while($row = $resultSet->fetch()) {
+            echo "<tr><td>" . $row['game_name'] . "</td><td>" . $row['platform'] . "</td><td>" . $row['release_year'] . "</td><td>" . $row['genre'] . "</td><td>" . $row['publisher'] . "</td><td>" . $row['na_sales'] . "</td><td>" . $row['eu_sales'] . "</td><td>" . $row['jp_sales'] . "</td><td>" . $row['other_sales'] . "</td><td>" . $row['global_sales'] . "</td></tr>";
+          }
+          
+          echo "</table>";
+        }
+        ?>
         
         
         <h1>Placeholder Infographic</h1>
-        <p>Creating a programatically created infographic required far too much Javascript knowledge compared to my knowledge base. Because of this, I've decided to just present the data returned from the query to the user as is. This should show that forms/validation/data-driven website requirements are all met. I will continue to work on the infographic portion, I just need to learn to Javascript libraries that do much of the heavy lifting for me.</p>
+        <p>Creating a programatically created infographic required far too much Javascript knowledge compared to my knowledge base. Because of this, I've decided to just present the data returned from the query to the user as is. This should show that forms/validation/data-driven website requirements are all met. I will continue to work on the infographic portion, and hopefully have it working for homework 7.</p>
         <img id="infographic" src="../images/placeholder.webp" alt="infographic"></img>
       </div>
     </div>

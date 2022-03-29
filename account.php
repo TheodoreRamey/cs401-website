@@ -28,11 +28,11 @@
       </div>
     </div>
   </div>
-  <div class="background_card">
+  <!-- <div class="background_card">
     <div class="content">
       <h3>Saved Queries</h3>
     </div>
-  </div>
+  </div> -->
 
 <?php 
   require_once 'footer.php';

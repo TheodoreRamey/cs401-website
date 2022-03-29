@@ -44,9 +44,9 @@
           <?php endforeach ?>
         </select>
         <label for="yearMin">Year of Release Minimum:</label>
-        <input type="number" id="yearMin" name="yearMin" placeholder="1980" min="1980" max="2016" value="<?php echo getValidData('yearMin'); ?>"></input>
+        <input type="number" id="yearMin" name="yearMin" min="1980" max="2016" value="<?php echo (isset($_SESSION['post']['yearMin'])) ? $_SESSION['post']['yearMin'] : 1980; ?>"></input>
         <label for="yearMax">Year of Release Maximum:</label>
-        <input type="number" id="yearMax" name="yearMax" placeholder="2016" min="1980" max="2016" value="<?php echo getValidData('yearMax'); ?>"></input>
+        <input type="number" id="yearMax" name="yearMax" min="1980" max="2016" value="<?php echo (isset($_SESSION['post']['yearMax'])) ? $_SESSION['post']['yearMax'] : 2016; ?>"></input>
         <label for="genre">Genre:</label>
         <select name="genre" id="genre" selected="<?php echo getValidData('genre'); ?>">
           <?php foreach($genreOptions as $eachGenre): ?>

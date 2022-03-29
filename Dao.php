@@ -64,7 +64,7 @@
     public function checkGame($game) {
       $conn = $this->getConnection();
       
-      $game = "'%" . $game . "%'";
+      $game = "%" . $game . "%";
       
       $gameQuery = "SELECT * FROM gameData WHERE game_name LIKE :game";
       $q = $conn->prepare($gameQuery);
@@ -87,7 +87,7 @@
     public function checkPublisher($publisher) {
       $conn = $this->getConnection();
       
-      $publisher = "'%" . $publisher . "%'";
+      $publisher = "%" . $publisher . "%";
       
       $publisherQuery = "SELECT * FROM gameData WHERE publisher LIKE :publisher";
       $q = $conn->prepare($publisherQuery);
@@ -111,8 +111,8 @@
       
       //Check for unfilled data/ones that represent all data 
       //(select/option basically, as text is validated in the handler)
-      $game = "'%" . $game . "%'";
-      $publisher = "'%" . $publisher . "%'";
+      $game = "%" . $game . "%";
+      $publisher = "%" . $publisher . "%";
       if ($platform == "ANY" || $platform = "") {
         //Replace ANY with blank, as all platforms will 'contain' the empty string
         $platform = "'%" . "" . "%'";
@@ -150,6 +150,49 @@
       }
       
       return false;
+    }
+    
+    public function createInfographic($game, $platform, $yearMin, $yearMax, $genre, $publisher, $region, $sales) {
+      $conn = $this->getConnection();
+      
+      //Check for unfilled data/ones that represent all data 
+      //(select/option basically, as text is validated in the handler)
+      $game = "%" . $game . "%";
+      $publisher = "%" . $publisher . "%";
+      if ($platform == "ANY" || $platform = "") {
+        //Replace ANY with blank, as all platforms will 'contain' the empty string
+        $platform = "%" . "" . "%";
+      }
+      if (!isset($yearMin) || $yearMin == "") {
+        $yearMin = 1980;
+      }
+      if (!isset($yearMax) || $yearMax == "") {
+        $yearMin = 2016;
+      }
+      if ($genre == "ANY" || $genre = "") {
+        $genre = "%" . "" . "%";
+      }
+      $sales = $this->getSalesFromIndex($sales);
+      
+      $this->logger->logDebug("Checking if games exist with parameters: " . $game . ", " . $platform . ", " . $yearMin . ", " . $yearMax . ", " . $genre . ", " . $publisher . ", " . $region . ", " . $sales);
+      
+      $query = "SELECT * FROM gameData WHERE game_name LIKE :game AND platform LIKE :platform AND release_year >= :yearMin AND release_year <= :yearMax AND genre LIKE :genre AND publisher LIKE :publisher AND global_sales >= :sales";
+      $q = $conn->prepare($query);
+      $q->bindParam(":game", $game);
+      $q->bindParam(":platform", $platform);
+      $q->bindParam(":yearMin", $yearMin);
+      $q->bindParam(":yearMax", $yearMax);
+      $q->bindParam(":genre", $genre);
+      $q->bindParam(":publisher", $publisher);
+      $q->bindParam(":sales", $sales);
+      
+      if (!$q->execute()) {
+        $this->logger->LogFatal("SQL statement to check gameData records failed to execute");
+        return false;
+      }
+      
+      //Return the result set to be parsed by info-handler/map.php
+      return $q;
     }
     
     public function getSalesFromIndex($sales) {

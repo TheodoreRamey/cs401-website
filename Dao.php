@@ -115,7 +115,7 @@
       $publisher = "%" . $publisher . "%";
       if ($platform == "ANY" || $platform = "") {
         //Replace ANY with blank, as all platforms will 'contain' the empty string
-        $platform = "'%" . "" . "%'";
+        $platform = "%" . "" . "%";
       }
       if (!isset($yearMin) || $yearMin == "") {
         $yearMin = 1980;
@@ -124,7 +124,7 @@
         $yearMin = 2016;
       }
       if ($genre == "ANY" || $genre = "") {
-        $genre = "'%" . "" . "%'";
+        $genre = "%" . "" . "%";
       }
       $sales = $this->getSalesFromIndex($sales);
       
@@ -146,9 +146,10 @@
       }
       //Check if there are any results
       if ($q->rowCount() > 0) {
+        $this->logger->LogDebug("Successfully found " . $q->rowCount() . " game records");
         return true;
       }
-      
+      $this->logger->LogDebug("Failed to find game records");
       return false;
     }
     
@@ -173,8 +174,6 @@
         $genre = "%" . "" . "%";
       }
       $sales = $this->getSalesFromIndex($sales);
-      
-      $this->logger->logDebug("Checking if games exist with parameters: " . $game . ", " . $platform . ", " . $yearMin . ", " . $yearMax . ", " . $genre . ", " . $publisher . ", " . $region . ", " . $sales);
       
       $query = "SELECT * FROM gameData WHERE game_name LIKE :game AND platform LIKE :platform AND release_year >= :yearMin AND release_year <= :yearMax AND genre LIKE :genre AND publisher LIKE :publisher AND global_sales >= :sales";
       $q = $conn->prepare($query);

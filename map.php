@@ -10,6 +10,12 @@
     unset($_SESSION['infoMessage']);
   }
   
+  //Grab the result set if it exists (this page redirects to itself)
+  if (isset($_SESSION['currentQuery'])) {
+    $resultSet = $_SESSION['currentQuery'];
+    unset($_SESSION['currentQuery']);
+  }
+  
   //Function to get valid form data to repopulate forms
   function getValidData($lookup) {
     return (isset($_SESSION['post'][$lookup])) ? $_SESSION['post'][$lookup] : "";
@@ -67,7 +73,7 @@
             <option value="<?php echo $eachSales ?>"<?php if(getValidData('sales') == $eachSales) { echo ' selected="selected"'; } ?>><?php echo $salesComments[$eachSales] ?></option>
           <?php endforeach ?>
         </select>
-        <button type="submit">Submit (non-functional)</button>
+        <button type="submit">Submit</button>
       </form>
       
       <?php
@@ -82,7 +88,12 @@
   <div class="background_card">
     <div class="content">
       <div id="map_infographic">
+        <h2>Result Set: Games That Match Your Parameters</h2>
+        
+        
+        
         <h1>Placeholder Infographic</h1>
+        <p>Creating a programatically created infographic required far too much Javascript knowledge compared to my knowledge base. Because of this, I've decided to just present the data returned from the query to the user as is. This should show that forms/validation/data-driven website requirements are all met. I will continue to work on the infographic portion, I just need to learn to Javascript libraries that do much of the heavy lifting for me.</p>
         <img id="infographic" src="../images/placeholder.webp" alt="infographic"></img>
       </div>
     </div>

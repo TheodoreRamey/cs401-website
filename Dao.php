@@ -63,13 +63,114 @@
     //Check if a game name exists in the database
     public function checkGame($game) {
       $conn = $this->getConnection();
+      
+      $game = "'%" . $game . "%'";
+      
+      $gameQuery = "SELECT * FROM gameData WHERE game_name LIKE :game";
+      $q = $conn->prepare($gameQuery);
+      $q->bindParam(":game", $game);
+      
+      if (!$q->execute()) {
+        $this->logger->LogFatal("SQL statement to check game existance failed to execute");
+        return false;
+      }
+      //Check if there are any results
+      if ($q->rowCount() > 0) {
+        $this->logger->LogDebug("Found game with name " . $game);
+        return true;
+      }
+      $this->logger->LogDebug("Failed to find game with name " . $game);
       return false;
     }
     
     //Check if a game name exists in the database
     public function checkPublisher($publisher) {
       $conn = $this->getConnection();
+      
+      $publisher = "'%" . $publisher . "%'";
+      
+      $publisherQuery = "SELECT * FROM gameData WHERE publisher LIKE :publisher";
+      $q = $conn->prepare($publisherQuery);
+      $q->bindParam(":publisher", $publisher);
+      
+      if (!$q->execute()) {
+        $this->logger->LogFatal("SQL statement to check publisher existance failed to execute");
+        return false;
+      }
+      //Check if there are any results
+      if ($q->rowCount() > 0) {
+        $this->logger->LogDebug("Found publisher with name " . $publisher);
+        return true;
+      }
+      $this->logger->LogDebug("Failed to find publisher with name " . $publisher);
       return false;
+    }
+    
+    public function checkInfoParams($game, $platform, $yearMin, $yearMax, $genre, $publisher, $region, $sales) {
+      $conn = $this->getConnection();
+      
+      //Check for unfilled data/ones that represent all data 
+      //(select/option basically, as text is validated in the handler)
+      $game = "'%" . $game . "%'";
+      $publisher = "'%" . $publisher . "%'";
+      if ($platform == "ANY" || $platform = "") {
+        //Replace ANY with blank, as all platforms will 'contain' the empty string
+        $platform = "'%" . "" . "%'";
+      }
+      if (!isset($yearMin) || $yearMin == "") {
+        $yearMin = 1980;
+      }
+      if (!isset($yearMax) || $yearMax == "") {
+        $yearMin = 2016;
+      }
+      if ($genre == "ANY" || $genre = "") {
+        $genre = "'%" . "" . "%'";
+      }
+      $sales = $this->getSalesFromIndex($sales);
+      
+      $this->logger->logDebug("Checking if games exist with parameters: " . $game . ", " . $platform . ", " . $yearMin . ", " . $yearMax . ", " . $genre . ", " . $publisher . ", " . $region . ", " . $sales);
+      
+      $query = "SELECT * FROM gameData WHERE game_name LIKE :game AND platform LIKE :platform AND release_year >= :yearMin AND release_year <= :yearMax AND genre LIKE :genre AND publisher LIKE :publisher AND global_sales >= :sales";
+      $q = $conn->prepare($query);
+      $q->bindParam(":game", $game);
+      $q->bindParam(":platform", $platform);
+      $q->bindParam(":yearMin", $yearMin);
+      $q->bindParam(":yearMax", $yearMax);
+      $q->bindParam(":genre", $genre);
+      $q->bindParam(":publisher", $publisher);
+      $q->bindParam(":sales", $sales);
+      
+      if (!$q->execute()) {
+        $this->logger->LogFatal("SQL statement to check gameData records failed to execute");
+        return false;
+      }
+      //Check if there are any results
+      if ($q->rowCount() > 0) {
+        return true;
+      }
+      
+      return false;
+    }
+    
+    public function getSalesFromIndex($sales) {
+      switch ($sales) {
+        case 0:
+          return 0.0;
+        case 1:
+          return 0.1;
+        case 2:
+          return 0.25;
+        case 3:
+          return 1.0;
+        case 4:
+          return 2.5;
+        case 5:
+          return 10.0;
+        case 6:
+          return 25.0;
+        default:
+          return 0;
+      }
     }
     
     //Checks if a username/password combination is valid

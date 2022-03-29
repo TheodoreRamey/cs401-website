@@ -29,6 +29,10 @@
     $_SESSION['infoMessage'][] = "The publisher you entered doesn't exist in our database. Please enter another.";
   }
   
+  //Check combination of all parameters for at least 1 result
+  if (!$dao->checkInfoParams($game, $platform, $yearMin, $yearMax, $genre, $publisher, $region, $sales)) {
+    $_SESSION['infoMessage'][] = "There are no games in our database with the parameters you used. Please widen your search and try again.";
+  }
   
   //If all the data isn't correct, put it all in SESSION and send it back to the user
   if (isset($_SESSION['infoMessage'])) {
@@ -44,5 +48,6 @@
   $dao = new Dao();
   $_SESSION['currentQuery'] = $dao->createInfographic($game, $platform, $yearMin, $yearMax, $genre, $publisher, $region, $sales);
   header("Location: map.php");
+  unset($_SESSION['infoMessage']);
   exit();
 ?>

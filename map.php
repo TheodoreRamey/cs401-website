@@ -22,8 +22,8 @@
   
   $regionOptions = array("Global", "Japan", "Europe", "North America", "Other");
   
-  $salesOptions = array(0, 1, 2, 3, 4, 5, 6, 7);
-  $salesComments = array("Any amount of Units Sold", "0 - 100,000 Units Sold", "100,000 - 250,000 Units Sold", "250,000 - 1,000,000 Units Sold", "1,000,000 - 2,500,000 Units Sold", "2,500,000 - 10,000,000 Units Sold", "10,000,000 - 25,000,000 Units Sold", "25,000,000 - 100,000,000 Units Sold");
+  $salesOptions = array(0, 1, 2, 3, 4, 5, 6);
+  $salesComments = array("Any Amount of Units Sold", "At Least 100,000 Units Sold", "At Least 250,000 Units Sold", "At Least 1,000,000 Units Sold", "At Least 2,500,000 Units Sold", "At Least 10,000,000 Units Sold", "At Least 25,000,000 Units Sold");
 ?>
 
 <!-- Body of HTML page -->

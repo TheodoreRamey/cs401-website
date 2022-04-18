@@ -24,8 +24,16 @@
 
 <!-- Body of HTML page -->
   <div class="background_card">
-    <div class="content">
+    <div class="content"> 
       <h2>Login</h2>
+      
+      <!-- Print messages about valid/invalid form data to user -->
+      <?php
+        foreach ($loginMessages as $loginMessage) {
+          echo "<div class='message'>{$loginMessage}<span class='removeClick'>x</span></div>";
+        }
+      ?>
+      
       <form class="data_entry_form" action="login-handler.php" method="post">
         <label for="loginUsername">Username:</label>
         <input type="text" placeholder="Username" name="loginUsername" value="<?php echo getValidData('loginUsername'); ?>"></input>
@@ -34,14 +42,15 @@
         <button type="submit">Submit</button>
       </form>
       
+      <h2>Don't have an account? Create one now!</h2>
+      
       <!-- Print messages about valid/invalid form data to user -->
       <?php
-        foreach ($loginMessages as $loginMessage) {
-          echo "<div class='message'>{$loginMessage}</div>";
+        foreach ($accountMessages as $accountMessage) {
+          echo "<div class='message'>{$accountMessage}<span class='removeClick'>x</span></div>";
         }
       ?>
       
-      <h2>Don't have an account? Create one now!</h2>
       <form class="data_entry_form" action="account-handler.php" method="post">
         <label for="email">Email:</label>
         <input type="text" placeholder="example@gmail.com" name="email" value="<?php echo getValidData('email'); ?>"></input>
@@ -56,12 +65,21 @@
         <button type="submit">Submit</button>
       </form>
       
-      <!-- Print messages about valid/invalid form data to user -->
-      <?php
-        foreach ($accountMessages as $accountMessage) {
-          echo "<div class='message'>{$accountMessage}</div>";
-        }
-      ?>
+      <!-- Script to fade user feedback on input -->
+      <script>
+      $(document).ready(function() {
+        //Fade out the parent div when clicked using jQuery
+        $(".removeClick").click(function() {
+          $(this).parent("div").fadeOut(1250);
+        });
+        
+        //Fade out messages to user after 15 seconds
+        setTimeout(
+        function fadeOutAfterSleep() {
+          $(".message").fadeOut(1250);
+        }, 15000);
+      });
+      </script>
       
     </div>
   </div>

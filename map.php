@@ -40,7 +40,7 @@
 <!-- Body of HTML page -->  
   <div class="background_card">
     <div class="content">
-      <h3>Infographics: How To Use</h3>
+      <h3>Data Visualization: How To Use</h3>
       <p>
         While our selection of games is large, please refrain from being hyper-specific unless you are looking for a specific game or small-subset of games. Saved form data will reset on page refresh. Select search parameters for the infographic. Different parameters include: <strong>Name, Platform, Year of Release, Genre, Publisher, Region, and Minimum Sales. All sales data is in # of units sold.</strong> 
       </p>
@@ -96,8 +96,10 @@
   <div class="background_card">
     <div class="content">
       <div id="map_infographic">
+        <!--
         <h1>Placeholder Infographic</h1>
         <img id="infographic" src="../images/placeholder.webp" alt="infographic"></img>
+        -->
           
         <!-- Table of data that is displayed in infographics above -->
         <?php 

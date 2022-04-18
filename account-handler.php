@@ -5,8 +5,8 @@
   $handledEmail = $_POST['email'];
   $handledName = $_POST['name'];
   $handledUsername = $_POST['accountUsername'];
-  $handledPassword = $_POST['accountPassword'];
-  $handledRePassword = $_POST['re-accountPassword'];
+  $handledPassword = hash('sha256', $_POST['accountPassword']);
+  $handledRePassword = hash('sha256', $_POST['re-accountPassword']);
 
   require_once 'Dao.php';
   $dao = new Dao();
@@ -49,7 +49,7 @@
   elseif (strlen($handledRePassword) == 0) {
     $_SESSION['accountMessage'][] = "Please enter your password in both password fields.";
   }
-  elseif (strlen($handledPassword) < 6) {
+  elseif (strlen($_POST['accountPassword']) < 6) {
     $_SESSION['accountMessage'][] = "Your password must be at least 6 characters long.";
   }
   elseif ($handledPassword != $handledRePassword) {

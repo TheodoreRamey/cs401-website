@@ -153,7 +153,7 @@
       return false;
     }
     
-    public function createInfographic($game, $platform, $yearMin, $yearMax, $genre, $publisher, $region, $sales) {
+    public function createGameDataTable($game, $platform, $yearMin, $yearMax, $genre, $publisher, $region, $sales) {
       $conn = $this->getConnection();
       
       //Check for unfilled data/ones that represent all data 

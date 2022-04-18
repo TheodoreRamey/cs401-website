@@ -37,7 +37,7 @@
   $salesComments = array("Any Amount of Units Sold", "At Least 100,000 Units Sold", "At Least 250,000 Units Sold", "At Least 1,000,000 Units Sold", "At Least 2,500,000 Units Sold", "At Least 10,000,000 Units Sold", "At Least 25,000,000 Units Sold");
 ?>
 
-<!-- Body of HTML page -->
+<!-- Body of HTML page -->  
   <div class="background_card">
     <div class="content">
       <h3>Infographics: How To Use</h3>
@@ -45,7 +45,17 @@
         While our selection of games is large, please refrain from being hyper-specific unless you are looking for a specific game or small-subset of games. Saved form data will reset on page refresh. Select search parameters for the infographic. Different parameters include: <strong>Name, Platform, Year of Release, Genre, Publisher, Region, and Minimum Sales.</strong> 
       </p>
       
-      <form class="data_entry_form" action="info-handler.php" method="post">
+      <?php
+        foreach ($infoMessages as $infoMessage) {
+          echo "<div class='message'>{$infoMessage}</div>";
+        }
+      ?>
+      
+      <div class="display_more_button">
+        <button id="show_form_button">Get Started!</button>
+      </div>
+      
+      <form class="data_entry_form" id="data_entry_form_id" action="info-handler.php" method="post">
         <label for="game">Game Name:</label>
         <input type="text" id="game" placeholder="Leave blank for any/all games..." name="game" value="<?php echo getValidData('game'); ?>"></input>
         <label for="platform">Game Platform:</label>
@@ -80,48 +90,69 @@
         </select>
         <button type="submit">Submit</button>
       </form>
-      
-      <?php
-        foreach ($infoMessages as $infoMessage) {
-          echo "<div class='message'>{$infoMessage}</div>";
-        }
-      ?>
-      
     </div>
   </div>
   
   <div class="background_card">
     <div class="content">
       <div id="map_infographic">
-        <?php 
-        if ($_SESSION['currentQuery']) {
-          //Grab the data from the database
-          require_once 'Dao.php';
-          $dao = new Dao();
-          $resultSet = $dao->createInfographic($currentGame, $currentPlatform, $currentYearMin, $currentYearMax, $currentGenre, $currentPublisher, $currentRegion, $currentSales);
-          
-          echo "<h2>Result Set: " . $resultSet->rowCount() . " Games That Match Your Parameters</h2>";
-          echo "<p><strong>Name:</strong> " . $currentGame . ", <strong>Platform: </strong>" . $currentPlatform . ", <strong>Release Year: </strong>" . $currentYearMin . "-" . $currentYearMax . ", <strong>Genre: </strong>" . $currentGenre . ", <strong>Publisher: </strong>" . $currentPublisher . ", <strong>Region: </strong>" . $currentRegion . ", <strong>Sales: </strong>" . $currentSales . "</p>";
-          
-          //Print it all out in a table for the user to see until the infographic works
-          //Potentially keep this but move it to another webpage
-          echo "<table>";
-            echo "<tr><td><strong>Game Name</strong></td><td><strong>Platform</strong></td><td><strong>Release Year</strong></td><td><strong>Genre</strong></td><td><strong>Publisher</strong></td><td><strong>NA Sales</strong></td><td><strong>EU Sales</strong></td><td><strong>JP Sales</strong></td><td><strong>Other Sales</strong></td><td><strong>Global Sales</strong></td></tr>";
-          while($row = $resultSet->fetch()) {
-            echo "<tr><td>" . $row['game_name'] . "</td><td>" . $row['platform'] . "</td><td>" . $row['release_year'] . "</td><td>" . $row['genre'] . "</td><td>" . $row['publisher'] . "</td><td>" . $row['na_sales'] . "</td><td>" . $row['eu_sales'] . "</td><td>" . $row['jp_sales'] . "</td><td>" . $row['other_sales'] . "</td><td>" . $row['global_sales'] . "</td></tr>";
-          }
-          
-          echo "</table>";
-        }
-        ?>
-        
-        
         <h1>Placeholder Infographic</h1>
-        <p>Creating a programatically created infographic required far too much Javascript knowledge compared to my knowledge base. Because of this, I've decided to just present the data returned from the query to the user as is. This should show that forms/validation/data-driven website requirements are all met. I will continue to work on the infographic portion, and hopefully have it working for homework 7.</p>
         <img id="infographic" src="../images/placeholder.webp" alt="infographic"></img>
+          
+        <!-- Table of data that is displayed in infographics above -->
+        <?php 
+          if ($_SESSION['currentQuery']) {
+            //Grab the data from the database
+            require_once 'Dao.php';
+            $dao = new Dao();
+            $resultSet = $dao->createGameDataTable($currentGame, $currentPlatform, $currentYearMin, $currentYearMax, $currentGenre, $currentPublisher, $currentRegion, $currentSales);
+            
+            echo "<h2>We Found " . $resultSet->rowCount() . " Games That Match Your Parameters</h2>";
+            
+            //Give the user an option to save this query to be available
+            //from their account page using buttons here and there
+            echo "<form action='fav-query-handler.php'><button type='submit'>Favorite This Search!</button></form>";
+         
+            
+            //Print out the table of game data that matches search parameters
+            echo "<p><strong>Name:</strong> " . $currentGame . ", <strong>Platform: </strong>" . $currentPlatform . ", <strong>Release Year: </strong>" . $currentYearMin . "-" . $currentYearMax . ", <strong>Genre: </strong>" . $currentGenre . ", <strong>Publisher: </strong>" . $currentPublisher . ", <strong>Region: </strong>" . $currentRegion . ", <strong>Sales: </strong>" . $currentSales . "</p>";
+            
+            //Print it all out in a table for the user to see until the infographic works
+            //Potentially keep this but move it to another webpage
+            echo "<table>";
+              echo "<tr><th>Game Name</th><th>Platform</th><th>Release Year</th><th>Genre</th><th>Publisher</th><th>NA Sales</th><th>EU Sales</th><th>JP Sales</th><th>Other Sales</th><th>Global Sales</th></tr>";
+            while($row = $resultSet->fetch()) {
+              echo "<tr><td>" . $row['game_name'] . "</td><td>" . $row['platform'] . "</td><td>" . $row['release_year'] . "</td><td>" . $row['genre'] . "</td><td>" . $row['publisher'] . "</td><td>" . $row['na_sales'] . "</td><td>" . $row['eu_sales'] . "</td><td>" . $row['jp_sales'] . "</td><td>" . $row['other_sales'] . "</td><td>" . $row['global_sales'] . "</td></tr>";
+            }
+            
+            echo "</table>";
+            echo "<br>";
+          }
+        ?>
       </div>
     </div>
   </div>
+  
+  <script>
+  $(document).ready(function() {
+    //Fade out the parent div when clicked using jQuery
+    $(".removeClick").click(function() {
+      $(this).parent("div").fadeOut(1250);
+    });
+    
+    //Fade out messages to user after 15 seconds
+    setTimeout(
+    function fadeOutAfterSleep() {
+      $(".message").fadeOut(1250);
+    }, 15000);
+    
+    //Show the form to the user when 'show_form_button' is pressed
+    $("#show_form_button").click(function() {
+      document.getElementById("data_entry_form_id").style.display = 'flex';
+    });  
+  });
+  </script>
+  
 <?php 
   require_once 'footer.php';
 ?>

@@ -3,7 +3,7 @@
   
   //Get username and password from POST
   $handledUsername = $_POST['loginUsername'];
-  $handledPassword = $_POST['loginPassword'];
+  $handledPassword = hash('sha256', $_POST['loginPassword']);
   
   //Validate the username, which must be max 32 characters
   if (strlen($handledUsername) == 0) {

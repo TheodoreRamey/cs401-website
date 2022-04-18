@@ -21,9 +21,9 @@
       <h3>Account Info</h3>
       <div id="user_info">
         <ul>
-          <li><strong>User Email: </strong><?php echo $accountInfo[0]; ?></li>
-          <li><strong>Name: </strong><?php echo $accountInfo[1]; ?></li>
-          <li><strong>Username: </strong><?php echo $accountInfo[2]; ?></li>
+          <li><strong>User Email: </strong><?php echo htmlspecialchars($accountInfo[0]); ?></li>
+          <li><strong>Name: </strong><?php echo htmlspecialchars($accountInfo[1]); ?></li>
+          <li><strong>Username: </strong><?php echo htmlspecialchars($accountInfo[2]); ?></li>
         </ul>
       </div>
     </div>

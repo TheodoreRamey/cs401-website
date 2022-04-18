@@ -42,7 +42,7 @@
     <div class="content">
       <h3>Infographics: How To Use</h3>
       <p>
-        While our selection of games is large, please refrain from being hyper-specific unless you are looking for a specific game or small-subset of games. Saved form data will reset on page refresh. Select search parameters for the infographic. Different parameters include: <strong>Name, Platform, Year of Release, Genre, Publisher, Region, and Minimum Sales.</strong> 
+        While our selection of games is large, please refrain from being hyper-specific unless you are looking for a specific game or small-subset of games. Saved form data will reset on page refresh. Select search parameters for the infographic. Different parameters include: <strong>Name, Platform, Year of Release, Genre, Publisher, Region, and Minimum Sales. All sales data is in # of units sold.</strong> 
       </p>
       
       <?php
@@ -110,8 +110,13 @@
             echo "<h2>We Found " . $resultSet->rowCount() . " Games That Match Your Parameters</h2>";
             
             //Give the user an option to save this query to be available
-            //from their account page using buttons here and there
-            echo "<form action='fav-query-handler.php'><button type='submit'>Favorite This Search!</button></form>";
+            //from their account page using buttons here and there if they're logged in
+            if ($_SESSION['validLogin']) {
+              echo "<form action='set-fav-query-handler.php'><button type='submit'>Favorite This Search!</button></form>";
+            }
+            else {
+              echo "<h4>Login to save your searches!</h4>";
+            }
          
             
             //Print out the table of game data that matches search parameters

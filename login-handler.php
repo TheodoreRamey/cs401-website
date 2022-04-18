@@ -42,5 +42,6 @@
   header('Location: account.php');
   $_SESSION['validLogin'] = TRUE;
   $_SESSION['currentUser'] = $handledUsername;
+  $_SESSION['currentUserID'] = $credentials;
   exit();
 ?>

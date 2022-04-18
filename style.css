@@ -95,7 +95,7 @@ hr {
 }
 
 .data_entry_form {
-  display: none;
+  display: flex;
   flex-flow: column;
   align-items: left;
 }
@@ -116,6 +116,10 @@ hr {
 
 .data_entry_form button:hover {
   background-color: #888;
+}
+
+#data_entry_form_id {
+  display: none;
 }
 
 .message {
@@ -145,6 +149,7 @@ hr {
   border: 1px solid;
   border-collapse: collapse;
   width: 100%;
+    margin-bottom: 15px;
 }
 
 #map_infographic th, td {
@@ -157,4 +162,15 @@ hr {
   margin-bottom: 10px;
 }
 
+#favorite_queries table {
+  border: 1px solid;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+#favorite_queries th, td {
+  border: 1px solid;
+  padding: 4px;
+}
 

@@ -235,7 +235,7 @@
       //Check if there are any results
       if ($q->rowCount() > 0) {
         $this->logger->LogDebug("Successfully logged in with username: " . $username);
-        return true;
+        return $q->fetchColumn(0);
       }
       
       return false;
@@ -275,6 +275,126 @@
       }
       
       return $q;
+    }
+    
+    //Check if a certain query exists in a user's favorites
+    public function checkFavoriteQuery() {
+      $conn = $this->getConnection();
+      $user_id = $_SESSION['currentUserID'];
+      $game = $_SESSION['currentGame'];
+      $platform = $_SESSION['currentPlatform'];
+      $yearMin = $_SESSION['currentYearMin'];
+      $yearMax = $_SESSION['currentYearMax'];
+      $genre = $_SESSION['currentGenre'];
+      $publisher = $_SESSION['currentPublisher'];
+      $region = $_SESSION['currentRegion'];
+      $sales = $_SESSION['currentSales'];
+    
+      $checkFavQuery = "SELECT * FROM savedqueries WHERE user_id = :user_id AND game = :game AND platform = :platform AND yearMin = :yearMin AND yearMax = :yearMax AND genre = :genre AND publisher = :publisher AND region = :region AND sales = :sales";
+      $q = $conn->prepare($checkFavQuery);
+      $q->bindParam(":user_id", $user_id);
+      $q->bindParam(":game", $game);
+      $q->bindParam(":platform", $platform);
+      $q->bindParam(":yearMin", $yearMin);
+      $q->bindParam(":yearMax", $yearMax);
+      $q->bindParam(":genre", $genre);
+      $q->bindParam(":publisher", $publisher);
+      $q->bindParam(":region", $region);
+      $q->bindParam(":sales", $sales);
+      
+      if (!$q->execute()) {
+        $this->logger->LogFatal("SQL statement to retrieve query data failed to execute");
+        exit();
+      }
+      
+      if ($q->rowCount() > 0) {
+        return true;
+      }
+      
+      return false;
+    }
+    
+    //Add a query to a user's favorite's
+    public function addFavoriteQuery() {
+      $conn = $this->getConnection();
+      $user_id = $_SESSION['currentUserID'];
+      $game = $_SESSION['currentGame'];
+      $platform = $_SESSION['currentPlatform'];
+      $yearMin = $_SESSION['currentYearMin'];
+      $yearMax = $_SESSION['currentYearMax'];
+      $genre = $_SESSION['currentGenre'];
+      $publisher = $_SESSION['currentPublisher'];
+      $region = $_SESSION['currentRegion'];
+      $sales = $_SESSION['currentSales'];
+      
+      $addFavQuery = "INSERT INTO savedqueries (user_id, game, platform, yearMin, yearMax, genre, publisher, region, sales) VALUES (:user_id, :game, :platform, :yearMin, :yearMax, :genre, :publisher, :region, :sales)";
+      $q = $conn->prepare($addFavQuery);
+      $q->bindParam(":user_id", $user_id);
+      $q->bindParam(":game", $game);
+      $q->bindParam(":platform", $platform);
+      $q->bindParam(":yearMin", $yearMin);
+      $q->bindParam(":yearMax", $yearMax);
+      $q->bindParam(":genre", $genre);
+      $q->bindParam(":publisher", $publisher);
+      $q->bindParam(":region", $region);
+      $q->bindParam(":sales", $sales);
+      
+      if (!$q->execute()) {
+        $this->logger->LogFatal("SQL statement to retrieve query data failed to execute");
+        exit();
+      }
+    }
+    
+    //Return all of a user's favorited queries
+    public function getFavoriteQueries() {
+      $conn = $this->getConnection();
+      $user_id = $_SESSION['currentUserID'];
+      
+      $query = "SELECT query_id, game, platform, yearMin, yearMax, genre, publisher, region, sales FROM savedqueries WHERE user_id = :user_id";
+      $q = $conn->prepare($query);
+      $q->bindParam(":user_id", $user_id);
+         
+      if (!$q->execute()) {
+        $this->logger->LogFatal("SQL statement to retrieve query data failed to execute");
+        return false;
+      }
+      else if ($q->rowCount() < 1) {
+        return false;
+      }
+      
+      return $q;
+    }
+    
+    //Get a single queries data to update the SESSION array
+    public function getSingleQuery($query_id) {
+      $conn = $this->getConnection();
+      
+      $query = "SELECT game, platform, yearMin, yearMax, genre, publisher, region, sales FROM savedqueries WHERE query_id = :query_id";
+      $q = $conn->prepare($query);
+      $q->bindParam(":query_id", $query_id);
+         
+      if (!$q->execute()) {
+        $this->logger->LogFatal("SQL statement to retrieve query data failed to execute");
+        exit();
+      }
+      
+      return $q;
+    }
+    
+    //Delete a favorite query from a user's account page
+    public function deleteFavoriteQuery($query_id) {
+      $conn = $this->getConnection();
+      
+      $query = "DELETE FROM savedqueries WHERE query_id = :query_id";
+      $q = $conn->prepare($query);
+      $q->bindParam(":query_id", $query_id);
+      
+      if (!$q->execute()) {
+        $this->logger->LogFatal("SQL statement to retrieve query data failed to execute");
+        return false;
+      }
+      
+      return true;
     }
   }
 ?>

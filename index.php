@@ -29,7 +29,7 @@
         <p>
           To get started with the infographic tools, you can either <a href="map.php">jump right in</a> or you can look at some of the example queries below, and their respective infographics, to get an idea for how the tool works.
         </p>
-        <h3>Examples to be filled in once the infographic tool works</h3>
+        <!--<h3>Examples to be filled in once the infographic tool works</h3>-->
       </div>
     </div>
   </div>
